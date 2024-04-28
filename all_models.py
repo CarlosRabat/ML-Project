@@ -9,7 +9,13 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import VotingClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    classification_report,
+)
 
 """
 File contains a function to build the best model for each implementation
@@ -130,7 +136,13 @@ def optimal_Decision_Tree():
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
 
-    dt_model = DecisionTreeClassifier(random_state=69, max_depth=None, criterion='gini', min_samples_split=3, min_samples_leaf=1)
+    dt_model = DecisionTreeClassifier(
+        random_state=69,
+        max_depth=None,
+        criterion="gini",
+        min_samples_split=3,
+        min_samples_leaf=1,
+    )
 
     dt_model.fit(X_train, y_train)
 
@@ -146,11 +158,11 @@ def optimal_Logistic_Regression():
         list: predictions
     """
 
-    data = np.load('data.npz')
-    X_train = data['X_train']
-    X_test = data['X_test']
-    y_train = data['y_train']
-    y_test = data['y_test']
+    data = np.load("data.npz")
+    X_train = data["X_train"]
+    X_test = data["X_test"]
+    y_train = data["y_train"]
+    y_test = data["y_test"]
 
     # Transorm to a list
     y_train = y_train.ravel()
@@ -161,40 +173,41 @@ def optimal_Logistic_Regression():
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
 
-    model_recall = LogisticRegression(C=0.1, class_weight='balanced', max_iter=100)
+    model_recall = LogisticRegression(C=0.1, class_weight="balanced", max_iter=100)
 
     model_accuracy = LogisticRegression(C=0.1, class_weight=None, max_iter=100)
 
-    vote_model = VotingClassifier(estimators=[
-        ('recall_opt', model_recall),
-        ('accuracy_opt', model_accuracy)
-    ], voting='soft', weights=[1,1])
+    vote_model = VotingClassifier(
+        estimators=[("recall_opt", model_recall), ("accuracy_opt", model_accuracy)],
+        voting="soft",
+        weights=[1, 1],
+    )
 
     vote_model.fit(X_train, y_train)
     y_pred_vote = vote_model.predict(X_test)
 
     return y_pred_vote
 
-if __name__ == '__main__':
-    MLP = optimal_MLP()
-    SVM = optimal_SVM()
-    DT = optimal_Decision_Tree()
-    LR = optimal_Logistic_Regression()
 
-    data = np.load('data.npz')
-    y_test = data['y_test']
-    y_test = y_test.squeeze()
+# if __name__ == "__main__":
+#     MLP = optimal_MLP()
+#     SVM = optimal_SVM()
+#     DT = optimal_Decision_Tree()
+#     LR = optimal_Logistic_Regression()
 
-    vote_accuracy = accuracy_score(y_test, LR)
-    vote_precision = precision_score(y_test, LR)
-    vote_recall = recall_score(y_test, LR)
-    vote_f1 = f1_score(y_test, LR)
+#     data = np.load("data.npz")
+#     y_test = data["y_test"]
+#     y_test = y_test.squeeze()
 
-    print(f"Vote Accuracy: {vote_accuracy:.4f}")
-    print(f"Vote Precision: {vote_precision:.4f}")
-    print(f"Vote Recall: {vote_recall:.4f}")
-    print(f"Vote F1 Score: {vote_f1:.4f}")
-    #print("\nClassification Report:\n", classification_report(y_test, LR))
+#     vote_accuracy = accuracy_score(y_test, LR)
+#     vote_precision = precision_score(y_test, LR)
+#     vote_recall = recall_score(y_test, LR)
+#     vote_f1 = f1_score(y_test, LR)
 
-    # The other models can be added if needed
+#     print(f"Vote Accuracy: {vote_accuracy:.4f}")
+#     print(f"Vote Precision: {vote_precision:.4f}")
+#     print(f"Vote Recall: {vote_recall:.4f}")
+#     print(f"Vote F1 Score: {vote_f1:.4f}")
+#     # print("\nClassification Report:\n", classification_report(y_test, LR))
 
+#     # The other models can be added if needed
