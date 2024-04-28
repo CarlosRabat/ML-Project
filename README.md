@@ -7,6 +7,7 @@ The main idea of this project was to create machine learning models to predict b
 ### To-Do List
 - [x] Write Report
 - [x] Finish Code
+  - [ ] Property Documentation
   - [x] Data Summary
   - [x] Data Loading
   - [x] MLP
@@ -20,3 +21,4 @@ The main idea of this project was to create machine learning models to predict b
 - [x] Create Presentation
 - [x] Submit Individual Contribution
 - [x] Record Presentation
+
