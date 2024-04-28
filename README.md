@@ -7,7 +7,7 @@ The main idea of this project was to create machine learning models to predict b
 ### To-Do List
 - [x] Write Report
 - [x] Finish Code
-  - [ ] Property Documentation
+  - [x] Property Documentation (This was acheived through a combination of comments (mainly found in our ".py" file) and markdown (found in our ".ipynb") file. 
   - [x] Data Summary
   - [x] Data Loading
   - [x] MLP
